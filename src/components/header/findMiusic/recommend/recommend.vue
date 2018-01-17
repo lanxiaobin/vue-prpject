@@ -23,21 +23,21 @@
                     <button>热门推荐</button>
                     <ul>
                         <li>
-                            <!-- <a href="javascript:;">华语</a>  -->
-                            </li>
+                            <a href="javascript:;">华语</a> 
+                        </li>
                     </ul> 
                 </div>
                 <div class="clearFix">
                     <ul class="m-lists">
-                        <li v-for="(item,index) in personalized" v-if="item.copywriter === '热门歌单推荐'" :key="index">
+                        <li :id="item.id" v-for="(item,index) in personalized" v-if="index < 8" :key="index">
                             <div class="img">
                                 <a href="">
                                     <img :src="item.picUrl" alt="">
                                 </a>
                                 <dfn class="dfn">
-                                    <span></span>
-                                    <span></span>
-                                    <button></button>
+                                    <Icon type="headphone" :size='18' color='#999' style="margin:4px;margin-right:6px; float:left"></Icon>
+                                    <span style="color:#fff; float:left">{{item.playCount}}</span>
+                                    <Icon class="play" type="ios-play" :size='14' color='#fff'></Icon>
                                 </dfn>
                             </div>
                             <p>{{item.name}}</p>
@@ -78,6 +78,11 @@
                              </CarouselItem>
                         </Carousel> 
                     </div>
+                </div>
+            </div>
+            <div class="bill">
+                <div class="title">
+                    <button>榜单</button>
                 </div>
             </div>
         </div>
