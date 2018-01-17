@@ -23,7 +23,7 @@
                     <button>热门推荐</button>
                     <ul>
                         <li>
-                            <a href="javascript:;">华语</a> 
+                            <!-- <a href="javascript:;">华语</a>  -->
                             </li>
                     </ul> 
                 </div>
