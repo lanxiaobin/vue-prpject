@@ -1,0 +1,210 @@
+#app{
+    background-color: #f5f5f5;
+}
+.clearFix::after{
+    content: '';
+    display: block;
+    clear: both;
+    border: none;
+    height: 0px;
+}
+button{
+    padding: 0;
+    margin: 0;
+    outline: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.top{
+    width: 100%;
+    .header{
+        width: 100%;
+        line-height: 70px;
+        height: 70px;
+        background-color: #242424;
+        overflow: hidden;
+        .h-top{
+            max-width: 1100px;
+            margin: 0 auto;
+            height: 100%;
+        }
+        .logo{
+            float: left;
+            height: 100%;
+            h1{
+                height: 100%;
+            }
+            a{
+                display: block;
+                height: 100%;
+                width: 157px;
+                margin-right: 20px;
+                background-image: url(../assets/topbar.png);
+                background-repeat: no-repeat;
+                background-size:240px 215px ;
+            }
+        }
+        .h-list{
+            float: left;
+            background-color: transparent;
+            height: 100%;
+        }
+        .h-list::after{
+            display: none;
+        }
+        .h-list .ivu-menu-item-active{
+            border:none;
+            background-color: #111;
+            color: #fff;
+        }
+        .h-list .ivu-menu-item:hover{
+            border:none;
+            background-color: #111;
+            color: #fff;
+        }
+        .h-list li{
+            line-height: 70px;
+            height: 100%;
+            color: #ccc;
+            position: relative;
+            border-bottom: none;
+            i{
+                position: absolute;
+                top: 20px;
+                right: -20px;
+                width: 25px;
+                height: 13px;
+                background-image: url(../assets/topbar.png);
+                background-repeat: no-repeat;
+                background-size: 240px 215px;
+                background-position: -192px 0;
+                border-radius: 6px;
+            }
+        }
+        .inp{
+            float: right;
+        }
+        .login{
+            float:right;
+        }
+    }
+    .nav{
+        width: 100%;
+        height: 34px;
+        background-color: #C20C0C;
+        .h-list{
+            height: 100%;
+            background-color: transparent;
+            display: inline-block;
+            margin-left: 180px;
+            li{
+                line-height:34px;
+                border-bottom: none;
+                color: #fff;
+                em{
+                    font-style: normal;
+                    display: inline-block;
+                    line-height: 20px;
+                    padding:0 10px;
+                    border-radius: 10px;
+                }
+                em:hover{
+                    background-color:#9B0909;
+                }
+            }
+        }
+        .h-list .ivu-menu-item-active{
+            border:none;
+            em{
+                background-color:#9B0909;
+            }
+        }
+        .h-list::after{
+            display: none;//*
+            border:none;
+        }
+        .h-list .ivu-menu-item:hover{
+            border:none;//*
+            color: #fff;
+        }
+    }
+    .sub{
+        height: 5px;
+        background-color: #C20C0C;
+    }
+}
+.h-list .ivu-menu-item-active{
+    span{
+        position: absolute;
+        width: 12px;
+        height: 7px;
+        top:64px;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        margin: auto;
+        background-image:url(../assets/topbar.png);
+        background-repeat: no-repeat;
+        background-size: 240px 215px;
+        background-position: -226px 1px;
+    }
+}
+.inp{
+    input{
+        width: 158px;
+        border-radius: 20px;
+        padding-left: 15px;
+        border: none;
+    }
+}
+.blog{
+    float: right;
+    margin: 20px 10px 0 10px;
+    a{
+        display: block;
+        min-width: 90px;
+        padding-left: 30px;
+        line-height: 32px;
+        color: #ccc;
+        background-image:url(../assets/topbar.png);
+        background-repeat: no-repeat;
+        background-size: 240px 215px;
+        background-position: 0 -140px;
+        &:hover{
+            color: #fff;
+            border-color:#999;
+            background-position: -100px -140px;
+        }
+    }
+}
+.login{
+    a{
+        color: rgb(122, 119, 119);
+        &:hover{
+            color: #999;
+        }
+    }
+    .ivu-dropdown-rel{
+        height:55px;
+    }
+    .ivu-select-dropdown{
+        background-color: #333131;
+        padding: 0;
+        li{
+            color: #ccc;
+        }
+        li:hover{
+            background-color: #3d3b3b;
+            color: #fff;
+        }
+    }
+    .dropdownItem{
+        word-spacing: 3px;
+        i{
+            vertical-align: middle;
+        }
+    }
+}
+  
+  

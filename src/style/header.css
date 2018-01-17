@@ -1,0 +1,202 @@
+#app {
+  background-color: #f5f5f5;
+}
+.clearFix::after {
+  content: '';
+  display: block;
+  clear: both;
+  border: none;
+  height: 0px;
+}
+button {
+  padding: 0;
+  margin: 0;
+  outline: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.top {
+  width: 100%;
+}
+.top .header {
+  width: 100%;
+  line-height: 70px;
+  height: 70px;
+  background-color: #242424;
+  overflow: hidden;
+}
+.top .header .h-top {
+  max-width: 1100px;
+  margin: 0 auto;
+  height: 100%;
+}
+.top .header .logo {
+  float: left;
+  height: 100%;
+}
+.top .header .logo h1 {
+  height: 100%;
+}
+.top .header .logo a {
+  display: block;
+  height: 100%;
+  width: 157px;
+  margin-right: 20px;
+  background-image: url(../assets/topbar.png);
+  background-repeat: no-repeat;
+  background-size: 240px 215px ;
+}
+.top .header .h-list {
+  float: left;
+  background-color: transparent;
+  height: 100%;
+}
+.top .header .h-list::after {
+  display: none;
+}
+.top .header .h-list .ivu-menu-item-active {
+  border: none;
+  background-color: #111;
+  color: #fff;
+}
+.top .header .h-list .ivu-menu-item:hover {
+  border: none;
+  background-color: #111;
+  color: #fff;
+}
+.top .header .h-list li {
+  line-height: 70px;
+  height: 100%;
+  color: #ccc;
+  position: relative;
+  border-bottom: none;
+}
+.top .header .h-list li i {
+  position: absolute;
+  top: 20px;
+  right: -20px;
+  width: 25px;
+  height: 13px;
+  background-image: url(../assets/topbar.png);
+  background-repeat: no-repeat;
+  background-size: 240px 215px;
+  background-position: -192px 0;
+  border-radius: 6px;
+}
+.top .header .inp {
+  float: right;
+}
+.top .header .login {
+  float: right;
+}
+.top .nav {
+  width: 100%;
+  height: 34px;
+  background-color: #C20C0C;
+}
+.top .nav .h-list {
+  height: 100%;
+  background-color: transparent;
+  display: inline-block;
+  margin-left: 180px;
+}
+.top .nav .h-list li {
+  line-height: 34px;
+  border-bottom: none;
+  color: #fff;
+}
+.top .nav .h-list li em {
+  font-style: normal;
+  display: inline-block;
+  line-height: 20px;
+  padding: 0 10px;
+  border-radius: 10px;
+}
+.top .nav .h-list li em:hover {
+  background-color: #9B0909;
+}
+.top .nav .h-list .ivu-menu-item-active {
+  border: none;
+}
+.top .nav .h-list .ivu-menu-item-active em {
+  background-color: #9B0909;
+}
+.top .nav .h-list::after {
+  display: none;
+  border: none;
+}
+.top .nav .h-list .ivu-menu-item:hover {
+  border: none;
+  color: #fff;
+}
+.top .sub {
+  height: 5px;
+  background-color: #C20C0C;
+}
+.h-list .ivu-menu-item-active span {
+  position: absolute;
+  width: 12px;
+  height: 7px;
+  top: 64px;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  margin: auto;
+  background-image: url(../assets/topbar.png);
+  background-repeat: no-repeat;
+  background-size: 240px 215px;
+  background-position: -226px 1px;
+}
+.inp input {
+  width: 158px;
+  border-radius: 20px;
+  padding-left: 15px;
+  border: none;
+}
+.blog {
+  float: right;
+  margin: 20px 10px 0 10px;
+}
+.blog a {
+  display: block;
+  min-width: 90px;
+  padding-left: 30px;
+  line-height: 32px;
+  color: #ccc;
+  background-image: url(../assets/topbar.png);
+  background-repeat: no-repeat;
+  background-size: 240px 215px;
+  background-position: 0 -140px;
+}
+.blog a:hover {
+  color: #fff;
+  border-color: #999;
+  background-position: -100px -140px;
+}
+.login a {
+  color: #7a7777;
+}
+.login a:hover {
+  color: #999;
+}
+.login .ivu-dropdown-rel {
+  height: 55px;
+}
+.login .ivu-select-dropdown {
+  background-color: #333131;
+  padding: 0;
+}
+.login .ivu-select-dropdown li {
+  color: #ccc;
+}
+.login .ivu-select-dropdown li:hover {
+  background-color: #3d3b3b;
+  color: #fff;
+}
+.login .dropdownItem {
+  word-spacing: 3px;
+}
+.login .dropdownItem i {
+  vertical-align: middle;
+}
