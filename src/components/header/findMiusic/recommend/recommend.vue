@@ -2,7 +2,7 @@
 <div>
     <div>
         <div class="banner" style="width:980px;height:336px; margin:0 auto;">
-            <Carousel style="width:730px; float:left" class="b-height" v-model="value1" :autoplay="true" :autoplay-speed="3000" :loop="true" :height="336" @on-change="tabbg">
+            <Carousel style="width:730px; float:left" class="b-height" v-model="value1" :autoplay="true" :autoplay-speed="3000" :loop="true" :height="336" @on-change="tabBg">
                 <CarouselItem id="recomed" v-for="(item,index) in items" :key="index">
                     <div class="demo-carousel" style="height:100%">
                         <a href="javascript:;">
@@ -29,7 +29,7 @@
                 </div>
                 <div class="clearFix">
                     <ul class="m-lists">
-                        <li :id="item.id" v-for="(item,index) in personalized" v-if="index < 8" :key="index">
+                        <li :id="item.id" v-for="(item,index) in personalized" v-if="index < 8" :key="index" ref="obtain">
                             <div class="img">
                                 <a href="">
                                     <img :src="item.picUrl" alt="">
@@ -37,7 +37,9 @@
                                 <dfn class="dfn">
                                     <Icon type="headphone" :size='18' color='#999' style="margin:4px;margin-right:6px; float:left"></Icon>
                                     <span style="color:#fff; float:left">{{item.playCount}}</span>
-                                    <Icon class="play" type="ios-play" :size='14' color='#fff'></Icon>
+                                    <span @click="obtain(item.id)" >
+                                        <Icon class="play" type="ios-play" :size='14' color='#fff'></Icon>
+                                    </span>
                                 </dfn>
                             </div>
                             <p>{{item.name}}</p>
@@ -95,7 +97,6 @@
 import '@/style/recomed.css'
 
 export default {
-    name:'recomed',
     data () {
         return {
             value1: 0,
@@ -104,17 +105,19 @@ export default {
     },
     computed:{
         items(){return this.$store.state.banner},
-        personalized(){return this.$store.state.personalized}
+        personalized(){return this.$store.state.personalized},
+        url(){return this.$store.state.songsUrl}
     },
     methods:{
-        tabbg(oldValue,value){
+        tabBg(oldValue,value){
             this.$el.children[0].style.backgroundImage = `url(${this.items[value].pic})`;
             this.$el.children[0].style.backgroundSize = '1px 100%';
             this.$el.children[0].style.backgroundPosition = '-1px 0';
             this.$el.children[0].style.backgroundRepeat = 'repeatX'
         },
-        newTop(){
-            return console.log(this) 
+        obtain(id){
+            this.$store.dispatch('getSongs',id)
+            this.$store.state.playIcon = 'pause'
         }
     },
     beforeCreate:function (params) {

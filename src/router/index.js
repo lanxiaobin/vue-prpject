@@ -8,7 +8,7 @@ import MyMiusic from '@/components/header/myMiusic/mymiusic'
 import Friend from '@/components/header/friend/friend'
 import DonwLoad from '@/components/header/donwLoad/donwload'
 const router = new VueRouter({
-    mode:'history',
+    // mode:'history',
     routes:[
         {
             path:'/',
@@ -20,7 +20,11 @@ const router = new VueRouter({
             children:[
                 { path: 'recommend', component: Recommend}
             ],
-            redirect: 'findmiusic/recommend'
+            redirect: '/findmiusic/recommend'
+        },
+        {
+            path: '/findmiusic/recommend',
+            component: Recommend
         },
         {
             path:'/mymiusic',

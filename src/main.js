@@ -17,7 +17,10 @@ Vue.config.productionTip = false
 let store = new Vuex.Store({
   state:{
     banner:[],
-    personalized:[]//推荐歌单
+    personalized:[],//推荐歌单
+    songsUrl:[],
+    playList:[],
+    playIcon:'play'
   },
   mutations:{
     changeBanner(state, payload){
@@ -25,6 +28,11 @@ let store = new Vuex.Store({
     },
     changPersonalized(state, pd) {
       state.personalized = pd.personalized.data.result
+    },
+    changeSongsUrl(state,url){
+      state.songsUrl = url.songsUrl.data.data;
+      state.playList = url.playList.data.playlist.tracks
+      // state.playIcon 
     }
   },
   actions:{
@@ -39,12 +47,28 @@ let store = new Vuex.Store({
     },
     getPersonalized({ commit }, pd) {
       axios.get('/personalized')
-        .then(function (res) {
+      .then(function (res) {
+        commit({
+          type: 'changPersonalized',
+          personalized: res
+        })
+      })
+    },
+    getSongs({ commit },songsId,songsUrl){
+      axios.get('/playlist/detail?id='+songsId)
+      .then(function(playList){
+        var songId =[];
+        playList.data.playlist.tracks.forEach(function(item,index) {
+          songId.push(item.id)
+        });
+        axios.get('/music/url?id='+songId).then(function(res){
           commit({
-            type: 'changPersonalized',
-            personalized: res
+            type:'changeSongsUrl',
+            songsUrl:res,
+            playList
           })
         })
+      })
     }
   }
 })
