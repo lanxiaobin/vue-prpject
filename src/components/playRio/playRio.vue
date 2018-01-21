@@ -14,13 +14,16 @@
     
     <div class="head">
       <a href="javascript:;">
-        <img :src="playlist[number].al.picUrl" alt="">
+        <img v-if="playlist.length" :src="playlist[number].al.picUrl" alt="">
+        <img v-else src="123" alt="" style="background-color:rgba(0,0,0,.6)">
       </a>
     </div>
     <div class="Progress">
       <div class="s-name" style="color:#fff; line-height:28px;">
-        <span style="display:inline-block;height:28px;vertical-align: top">{{playlist[number].name}}</span>
-        <span>{{playlist[number].ar[0].name}}</span>
+        <span v-if="playlist.length" >{{playlist[number].name}}</span>
+        <span v-else style="display:inline-block;height:28px;vertical-align: top; margin-right:10px; color:#666">歌曲：待播放</span>
+        <span v-if="playlist.length">{{playlist[number].ar[0].name}}</span>
+        <span v-else style="display:inline-block;height:28px;vertical-align: top; margin-right:10px; color:#666">演唱：</span>
         <Icon v-if="playlist.length" type="link" :size="12"></Icon>
       </div>
       <div class="bar" style="width:440px; line-height:10px">
@@ -29,7 +32,7 @@
     </div>
     <div class="oper"></div>
     <div class="flag"></div>
-    <audio :src="Surl[number].url" ref="audio"></audio>
+    <audio :src="Surl[number].url" autoplay ref="audio"></audio>
   </div>
 </template>
 <script>
@@ -38,8 +41,8 @@ export default {
   data(){
     return {
       number:0,
-      timer:'',
-      w:'' * 1
+      w:'' * 1,
+      oof:false
     }
   },
   computed:{
@@ -53,19 +56,8 @@ export default {
       }
     },
     playlist(){
-      if(this.$store.state.playList.length){
-        return this.$store.state.playList
-      }else{
-        return {
-          0:{
-            al:{picUrl:''},
-            name:'',
-            ar:{
-              0:{name:''}
-            }
-          }
-        }
-      }
+      this.oof = this.$store.state.off
+      return this.$store.state.playList
     },
     type(){
       return this.$store.state.playIcon
@@ -73,20 +65,17 @@ export default {
   },
   methods:{
     tabPlay:function(){
-      let proWith;
       if(this.type ==='play'){
         this.$store.state.playIcon = 'pause'
         this.$refs.audio.play()
-        this.timer = setInterval(()=>{
-         proWith = this.$refs.audio.currentTime/this.$refs.audio.duration *100
-         //this.$refs.progress.percent
-         this.w = proWith
+        this.$store.state.timer = setInterval(()=>{
+         this.w = this.$refs.audio.currentTime/this.$refs.audio.duration *100
          if(this.w == 100){this.number++}
         },100)
       }else{
         this.$store.state.playIcon = 'play';
         this.$refs.audio.pause()
-        clearTimeout(this.timer)
+        clearTimeout(this.$store.state.timer)
       }
     },
     playNext(){
@@ -96,8 +85,10 @@ export default {
       this.number--
     }
   },
-  created(){
-    this.$store.dispatch('getSongs',880743872)
+  watch:{
+    oof:function(){
+      this.tabPlay()
+    }
   }
 }
 </script>

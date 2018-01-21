@@ -37,7 +37,7 @@
                                 <dfn class="dfn">
                                     <Icon type="headphone" :size='18' color='#999' style="margin:4px;margin-right:6px; float:left"></Icon>
                                     <span style="color:#fff; float:left">{{item.playCount}}</span>
-                                    <span @click="obtain(item.id)" >
+                                    <span @click="obtain(item.id)">
                                         <Icon class="play" type="ios-play" :size='14' color='#fff'></Icon>
                                     </span>
                                 </dfn>
@@ -117,7 +117,7 @@ export default {
         },
         obtain(id){
             this.$store.dispatch('getSongs',id)
-            this.$store.state.playIcon = 'pause'
+            this.$store.state.off = true
         }
     },
     beforeCreate:function (params) {

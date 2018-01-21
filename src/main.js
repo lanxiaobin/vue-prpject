@@ -20,7 +20,9 @@ let store = new Vuex.Store({
     personalized:[],//推荐歌单
     songsUrl:[],
     playList:[],
-    playIcon:'play'
+    playIcon:'play',
+    timer:'',
+    off:false
   },
   mutations:{
     changeBanner(state, payload){
@@ -32,7 +34,6 @@ let store = new Vuex.Store({
     changeSongsUrl(state,url){
       state.songsUrl = url.songsUrl.data.data;
       state.playList = url.playList.data.playlist.tracks
-      // state.playIcon 
     }
   },
   actions:{
