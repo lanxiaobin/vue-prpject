@@ -45,14 +45,14 @@
 .title ul {
   float: left;
   display: flex;
-  margin: 7px 0 0 20px;
+  margin-left: 20px;
+  line-height: 33px;
 }
 .title ul li {
   flex: 1;
   padding: 0 10px;
   border-right: 1px solid #ccc;
   font-size: 12px;
-  line-height: 13px;
   cursor: pointer;
 }
 .title ul li a {
@@ -70,6 +70,26 @@
   font-weight: normal;
   line-height: 28px;
 }
+.title .icon {
+  float: left;
+  line-height: 28px;
+  font-size: 20px;
+  color: #C10D0C;
+  margin-left: -20px;
+  margin-right: 10px;
+}
+.title .max {
+  float: right;
+  line-height: 33px;
+  color: #666;
+}
+.title .max-icon {
+  float: right;
+  line-height: 33px;
+  font-size: 12px;
+  color: #C10D0C;
+  margin-left: 4px;
+}
 .c-left .m-lists li {
   float: left;
   width: 182px;
@@ -80,15 +100,15 @@
   padding-right: 0 ;
   width: 142px;
 }
-.c-left li:hover img,
-.c-left li:hover .dfn {
+.c-left .m-lists li:hover img,
+.c-left .m-lists li:hover .dfn {
   transform: scale(1.1);
   box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.4);
 }
-.c-left li:hover img {
+.c-left .m-lists li:hover img {
   margin-bottom: -21px;
 }
-.c-left li .dfn {
+.c-left .m-lists li .dfn {
   display: inline-block;
   width: 100%;
   height: 27px;
@@ -100,23 +120,23 @@
   z-index: 4;
   transition: .3s;
 }
-.c-left li a {
+.c-left .m-lists li a {
   display: inline-block;
 }
-.c-left li img {
+.c-left .m-lists li img {
   width: 100%;
   height: 100%;
   vertical-align: top;
   margin-bottom: -27px;
   transition: .3s;
 }
-.c-left li p {
+.c-left .m-lists li p {
   font-size: 14px;
   width: 100%;
   word-wrap: break-word;
   word-break: break-word;
 }
-.c-left li .play {
+.c-left .m-lists li .play {
   width: 20px;
   height: 20px;
   float: right;
@@ -155,4 +175,82 @@
 .n-newList li p {
   word-wrap: break-word;
   word-break: break-word;
+}
+.bi-list {
+  display: flex;
+}
+.bi-list .bi-border {
+  flex: 1;
+  background-color: #f5f5f5;
+  border: 1px solid #d3d3d3;
+}
+.bi-list .bi-border ul {
+  border: 1px solid #fff;
+}
+.bi-border:nth-child(2n) {
+  border-right: none;
+  border-left: none;
+}
+.bi-border ul img {
+  width: 100%;
+  height: 100%;
+}
+.bi-border ul .bi-top {
+  padding: 20px;
+  padding-right: 0;
+}
+.bi-border ul .list {
+  line-height: 32px;
+  padding-left: 10px;
+  position: relative;
+}
+.bi-border ul li:nth-child(even) {
+  background-color: #d3d3d3;
+}
+.bi-border ul .list .dfn {
+  word-spacing: 6px;
+  top: 4px;
+  position: absolute;
+  right: 10px;
+  display: none;
+}
+.bi-border ul .list:hover .dfn {
+  display: inline-block;
+}
+.bi-border ul .list:hover .name {
+  width: 110px;
+}
+.bi-border ul .list .name {
+  text-align: left;
+  display: inline-block;
+  vertical-align: top;
+  width: 170px;
+  height: 32px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+  margin-left: 6px;
+}
+.bi-top .t-img,
+.bi-top .t-title {
+  display: inline-block;
+  vertical-align: top;
+}
+.bi-top .t-img {
+  width: 80px;
+  height: 80px;
+}
+.bi-top .t-title {
+  margin: 6px 0 0 10px;
+}
+.bi-top .t-title .icons {
+  margin: 5px 0 0 6px;
+  word-spacing: 10px;
+}
+.bi-top button {
+  color: #c2bebe;
+}
+.bi-top button .icon:hover {
+  transition: .3s;
 }
