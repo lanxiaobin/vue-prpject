@@ -20,9 +20,12 @@ let store = new Vuex.Store({
     personalized:[],//推荐歌单
     songsUrl:[],
     playList:[],
+<<<<<<< HEAD
     B_Bill: [],
     Y_Bill: [],
     N_Bill: [],
+=======
+>>>>>>> f969b795968dd81e84f191ae7745dcb71a3201a9
     playIcon:'play',
     timer:'',
     off:false
@@ -37,6 +40,7 @@ let store = new Vuex.Store({
     changeSongsUrl(state,url){
       state.songsUrl = url.songsUrl.data.data;
       state.playList = url.playList.data.playlist.tracks
+<<<<<<< HEAD
     },
     changeB_Bill(state, B_Bill){
       state.B_Bill = B_Bill.B_Bill.data.playlist
@@ -46,6 +50,8 @@ let store = new Vuex.Store({
     },
     changeN_Bill(state, N_Bill) {
       state.N_Bill = N_Bill.N_Bill.data.playlist
+=======
+>>>>>>> f969b795968dd81e84f191ae7745dcb71a3201a9
     }
   },
   actions:{
