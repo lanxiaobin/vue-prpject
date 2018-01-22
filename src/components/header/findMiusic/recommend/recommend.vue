@@ -144,10 +144,6 @@ export default {
     computed:{
         items(){return this.$store.state.banner},
         personalized(){return this.$store.state.personalized},
-        url(){
-            // console.log(this.$store.state.songsUrl)
-            return this.$store.state.songsUrl
-        },
         bill(){
             return {
                 0:this.$store.state.B_Bill,

@@ -20,12 +20,9 @@ let store = new Vuex.Store({
     personalized:[],//推荐歌单
     songsUrl:[],
     playList:[],
-<<<<<<< HEAD
     B_Bill: [],
     Y_Bill: [],
     N_Bill: [],
-=======
->>>>>>> f969b795968dd81e84f191ae7745dcb71a3201a9
     playIcon:'play',
     timer:'',
     off:false
@@ -40,7 +37,6 @@ let store = new Vuex.Store({
     changeSongsUrl(state,url){
       state.songsUrl = url.songsUrl.data.data;
       state.playList = url.playList.data.playlist.tracks
-<<<<<<< HEAD
     },
     changeB_Bill(state, B_Bill){
       state.B_Bill = B_Bill.B_Bill.data.playlist
@@ -50,8 +46,6 @@ let store = new Vuex.Store({
     },
     changeN_Bill(state, N_Bill) {
       state.N_Bill = N_Bill.N_Bill.data.playlist
-=======
->>>>>>> f969b795968dd81e84f191ae7745dcb71a3201a9
     }
   },
   actions:{
@@ -80,11 +74,13 @@ let store = new Vuex.Store({
       //通过歌单ID获取歌曲列表
       axios.get('/playlist/detail?id='+songsId)
       .then(function(playList){
-        var songId = playList.data.playlist.tracks[0].id;
-        // console.log(songId)
+        var songId = [];
+        playList.data.playlist.tracks.forEach((item,index) => {
+          songId[index]= item.id;
+        });
+        console.log();
         //获取到歌曲的列表后 在通过 歌曲id 获取歌曲地址
-        axios.get('/music/url?id='+songId).then(function(res){
-          // console.log(res)
+        axios.get('/music/url?id='+ songId.sort(function(a,b){return b-a})).then(function(res){
           commit({
             type:'changeSongsUrl',
             songsUrl:res,
@@ -128,3 +124,4 @@ new Vue({
   components: { App }
 })
 export default store;
+

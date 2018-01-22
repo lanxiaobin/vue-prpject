@@ -47,7 +47,6 @@ export default {
   },
   computed:{
     Surl(){
-      // console.log(this.$store.state.songsUrl)
       if(this.$store.state.songsUrl.length){
         return this.$store.state.songsUrl
       }else{
