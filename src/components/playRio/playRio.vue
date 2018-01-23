@@ -14,7 +14,7 @@
     
     <div class="head">
       <a href="javascript:;">
-        <img v-if="playlist.length" :src="playlist[number].al.picUrl" alt="">
+        <img v-if="playlist[number]" :src="playlist[number].al.picUrl" alt="">
         <img v-else src="123" alt="" style="background-color:rgba(0,0,0,.6)">
       </a>
     </div>
@@ -47,9 +47,16 @@ export default {
   },
   computed:{
     Surl(){
-      // console.log(this.$store.state.songsUrl)
       if(this.$store.state.songsUrl.length){
-        return this.$store.state.songsUrl
+        var url = {};
+        for(let i=0;i<this.$store.state.songsUrl.length;i++){
+          for(let j=0;j<this.$store.state.playList.length;j++){
+            if(this.$store.state.songsUrl[j].id == this.$store.state.playList[i].id){
+              url[i] = this.$store.state.songsUrl[j]
+            }
+          }
+        }
+        return url
       }else{
         return {
             0:{url:'http://m10.music.126.net/20180119015614/79118947d981f9a14bf639f6a70ddd65/ymusic/8414/49ef/4899/ea72c3f419be5bc0686788f1d30bab08.mp3'}
