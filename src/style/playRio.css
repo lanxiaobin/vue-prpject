@@ -82,3 +82,7 @@
   border-radius: 2px;
   border-bottom: 0.5px solid #858080;
 }
+.Progress .s-name .song-name {
+  display: inline-block;
+  margin-right: 12px;
+}

@@ -19,8 +19,8 @@
       </a>
     </div>
     <div class="Progress">
-      <div class="s-name" style="color:#fff; line-height:28px;">
-        <span v-if="playlist.length" >{{playlist[number].name}}</span>
+      <div class="s-name" style="color:#fff; line-height:28px">
+        <span class="song-name" v-if="playlist.length">{{playlist[number].name}}</span>
         <span v-else style="display:inline-block;height:28px;vertical-align: top; margin-right:10px; color:#666">歌曲：待播放</span>
         <span v-if="playlist.length">{{playlist[number].ar[0].name}}</span>
         <span v-else style="display:inline-block;height:28px;vertical-align: top; margin-right:10px; color:#666">演唱：</span>
@@ -30,7 +30,10 @@
         <Progress class="bg-bar" :percent="w" :stroke-width="9" ref="progress" hide-info></Progress>
       </div>
     </div>
-    <div class="oper"></div>
+    <div class="oper">
+      <span style="color:#fff;">{{curMin +':' + curSeconds}}</span>
+      <span></span>
+    </div>
     <div class="flag"></div>
     <audio :src="Surl[number].url" autoplay ref="audio"></audio>
   </div>
@@ -42,17 +45,30 @@ export default {
     return {
       number:0,
       w:'' * 1,
-      oof:false
+      oof:false,
+      autoTab:false,
+      curMin:0,
+      curSeconds:0
     }
   },
   computed:{
     Surl(){
       if(this.$store.state.songsUrl.length){
-        var url = {};
-        for(let i=0;i<this.$store.state.songsUrl.length;i++){
-          for(let j=0;j<this.$store.state.playList.length;j++){
-            if(this.$store.state.songsUrl[j].id == this.$store.state.playList[i].id){
-              url[i] = this.$store.state.songsUrl[j]
+        var url = [];
+        if(this.$store.state.songsUrl.length > 1){
+          for(let i=0;i<this.$store.state.songsUrl.length;i++){
+            for(let j=0;j<this.$store.state.playList.length;j++){
+              if(this.$store.state.songsUrl[j].id == this.$store.state.playList[i].id){
+                url[i] = this.$store.state.songsUrl[j]
+              }
+            }
+          }
+        }
+        else if(this.$store.state.songsUrl.length === 1){
+          for(let i=0; i<this.$store.state.playList.length; i++){
+            if(this.$store.state.playList[i].id === this.$store.state.songsUrl[0].id){
+               url[0] =  this.$store.state.songsUrl[0]
+               this.$store.state.playList[0] = this.$store.state.playList[i]
             }
           }
         }
@@ -73,12 +89,22 @@ export default {
   },
   methods:{
     tabPlay:function(){
+     
       if(this.type ==='play'){
         this.$store.state.playIcon = 'pause'
         this.$refs.audio.play()
         this.$store.state.timer = setInterval(()=>{
-         this.w = this.$refs.audio.currentTime/this.$refs.audio.duration *100
-         if(this.w == 100){this.number++}
+          
+            if(this.$refs.audio.currentTime < 10){
+             this.curSeconds =  '0'+ parseInt(this.$refs.audio.currentTime)
+            }else if(this.$refs.audio.currentTime > 60){
+             this.curSeconds =  '0'
+            }else{
+             this.curSeconds =  parseInt(this.$refs.audio.currentTime)
+            }
+          this.curMin ='0' + parseInt(this.$refs.audio.currentTime/60)
+          this.w = this.$refs.audio.currentTime/this.$refs.audio.duration *100
+          if(this.w == 100){this.autoTab = true}
         },100)
       }else{
         this.$store.state.playIcon = 'play';
@@ -87,15 +113,37 @@ export default {
       }
     },
     playNext(){
-      this.number++
+      if(this.Surl.length > 1){
+        this.number++
+        this.playState()
+      }
+      return
     },
     playPre(){
-      this.number--
+      if(this.Surl.length > 1){
+        this.number--
+        this.playState()
+      }
+      return
+    },
+    playState(){
+      clearTimeout(this.$store.state.timer)
+      this.$refs.audio.play()
+      this.$store.state.timer = setInterval(()=>{
+        this.w = this.$refs.audio.currentTime/this.$refs.audio.duration *100
+        if(this.w == 100 && this.Surl > 1) {this.number++}
+      },100)
+      if(this.type ==='play'){this.$store.state.playIcon = 'pause'}
     }
   },
   watch:{
     oof:function(){
       this.tabPlay()
+    },
+    autoTab:function(){
+      if(this.Surl.length > 1){
+        this.number++
+      }
     }
   }
 }

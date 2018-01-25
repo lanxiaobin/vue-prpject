@@ -70,24 +70,38 @@ let store = new Vuex.Store({
       })
     },
     //获取歌曲url
-    getSongs({ commit },songsId,songsUrl){
-      //通过歌单ID获取歌曲列表
-      axios.get('/playlist/detail?id='+songsId)
-      .then(function(playList){
-        var songId = [];
-        playList.data.playlist.tracks.forEach((item,index) => {
-          songId[index]= item.id;
-        });
-        console.log();
-        //获取到歌曲的列表后 在通过 歌曲id 获取歌曲地址
-        axios.get('/music/url?id='+ songId.sort(function(a,b){return b-a})).then(function(res){
-          commit({
-            type:'changeSongsUrl',
-            songsUrl:res,
-            playList
+    getSongs({ commit }, songsId, songsUrl){
+      let { id, subId } = songsId;
+      if (typeof subId == 'undefined'){
+          //通过歌单ID获取歌曲列表
+        axios.get('/playlist/detail?id=' + id).then(function(playList){
+          var songId = [];
+          playList.data.playlist.tracks.forEach((item,index) => {
+            songId[index]= item.id;
+          });
+          //获取到歌曲的列表后 在通过 歌曲id 获取歌曲地址
+          axios.get('/music/url?id='+ songId).then(function(res){
+            commit({
+              type:'changeSongsUrl',
+              songsUrl:res,
+              playList
+            })
           })
         })
-      })
+      }
+      else{
+        axios.get('/playlist/detail?id=' + id).then(function (playList) {
+          //获取到歌曲的列表后 在通过 歌曲id 获取歌曲地址
+          axios.get('/music/url?id=' + subId).then(function (res) {
+            // console.log(playList, res)
+            commit({
+              type: 'changeSongsUrl',
+              songsUrl: res,
+              playList
+            })
+          })
+        })
+      }
     },
     //获取榜单列表
     getB_Bill({commit},B_Bill){

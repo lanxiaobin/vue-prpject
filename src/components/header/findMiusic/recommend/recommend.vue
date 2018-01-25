@@ -105,7 +105,7 @@
                                 <div class="t-title">
                                     <h3>{{item.name}}</h3>
                                     <div class="icons">
-                                        <button title="播放"><Icon :size="22" class="icon" type="play"></Icon></button>
+                                        <button title="播放" @click="obtain(item.id)"><Icon :size="22" class="icon" type="play" ></Icon></button>
                                         <button title="收藏"><Icon :size="22" class="icon" type="android-add-circle"></Icon></button>
                                     </div>
                                 </div>
@@ -116,7 +116,7 @@
                                    <span class="name">{{subItem.name}}</span> 
                                 </button>
                                 <dfn class="dfn">
-                                    <button @click="obtain(item.id)" title="播放"><Icon :size="20" color="#777" class="icon" type="play"></Icon></button>
+                                    <button @click="obtain(item.id,subItem.id)" title="播放"><Icon :size="20" color="#777" class="icon" type="play"></Icon></button>
                                     <button title="添加到播放列表"><Icon :size="20" color="#777" class="icon" type="android-add"></Icon></button>
                                     <button title="收藏"><Icon :size="20" class="icon" color="#777" type="android-add-circle"></Icon></button>
                                 </dfn>
@@ -159,8 +159,8 @@ export default {
             this.$el.children[0].style.backgroundPosition = '-1px 0';
             this.$el.children[0].style.backgroundRepeat = 'repeatX'
         },
-        obtain(id){
-            this.$store.dispatch('getSongs',id)
+        obtain(id,subId){
+            this.$store.dispatch('getSongs',{id,subId})
             this.$store.state.off = true
         }
     },
