@@ -4,7 +4,7 @@
       <span @click="playPre">
         <Icon class="btn br-song" ref="a" type="arrow-left-b"></Icon>
       </span>
-      <span @click.prevent="tabPlay"> 
+      <span @click.stop="tabPlay"> 
         <Icon class="btn player" ref="player" :type="type" ></Icon>
       </span>
       <span @click="playNext">
@@ -15,27 +15,28 @@
     <div class="head">
       <a href="javascript:;">
         <img v-if="playlist[number]" :src="playlist[number].al.picUrl" alt="">
-        <img v-else src="123" alt="" style="background-color:rgba(0,0,0,.6)">
+        <img v-else src="" alt="" style="background-color:rgba(0,0,0,.6)">
       </a>
     </div>
     <div class="Progress">
-      <div class="s-name" style="color:#fff; line-height:28px">
-        <span class="song-name" v-if="playlist.length">{{playlist[number].name}}</span>
+      <div class="s-name" style="color:#e8e8e8; line-height:28px">
+        <span  v-if="playlist.length">{{playlist[number].name}}</span>
         <span v-else style="display:inline-block;height:28px;vertical-align: top; margin-right:10px; color:#666">歌曲：待播放</span>
-        <span v-if="playlist.length">{{playlist[number].ar[0].name}}</span>
+        <span class="sing-name" v-if="playlist.length">{{playlist[number].ar[0].name}}</span>
         <span v-else style="display:inline-block;height:28px;vertical-align: top; margin-right:10px; color:#666">演唱：</span>
-        <Icon v-if="playlist.length" type="link" :size="12"></Icon>
+        <a href="javascript:;"><Icon class="link" v-if="playlist.length" type="link" :size="15" color="#AFA9A9"></Icon></a>
       </div>
-      <div class="bar" style="width:440px; line-height:10px">
-        <Progress class="bg-bar" :percent="w" :stroke-width="9" ref="progress" hide-info></Progress>
+      <div class="bar" style="width:440px; line-height:10px" ref="bar" @mousedown="setCurTime" @mouseup="removeAdd">
+        <Progress class="bg-bar" :percent="w" :stroke-width="8" ref="progress" hide-info ></Progress>
       </div>
     </div>
     <div class="oper">
-      <span style="color:#fff;">{{curMin +':' + curSeconds}}</span>
-      <span></span>
+      <span style="color:#a1a1a1;">{{curMin +':' + curSeconds}}</span>
+      <span style="color:#797979;">/ {{durationMin + ':' + durationSe}}</span>
     </div>
     <div class="flag"></div>
-    <audio :src="Surl[number].url" autoplay ref="audio"></audio>
+    
+    <audio v-if="Surl" :src="Surl[number].url" autoplay ref="audio"></audio>
   </div>
 </template>
 <script>
@@ -47,8 +48,10 @@ export default {
       w:'' * 1,
       oof:false,
       autoTab:false,
-      curMin:0,
-      curSeconds:0
+      curMin:'00',
+      curSeconds:'00',
+      durationMin:'00',
+      durationSe:'00'
     }
   },
   computed:{
@@ -73,10 +76,6 @@ export default {
           }
         }
         return url
-      }else{
-        return {
-            0:{url:'http://m10.music.126.net/20180119015614/79118947d981f9a14bf639f6a70ddd65/ymusic/8414/49ef/4899/ea72c3f419be5bc0686788f1d30bab08.mp3'}
-        }
       }
     },
     playlist(){
@@ -89,23 +88,30 @@ export default {
   },
   methods:{
     tabPlay:function(){
-     
+      
       if(this.type ==='play'){
-        this.$store.state.playIcon = 'pause'
-        this.$refs.audio.play()
+        let time, time1;
+        this.$store.state.playIcon = 'pause';
+        this.$refs.audio ? this.$refs.audio.play() : '';
+        //时间定时器
         this.$store.state.timer = setInterval(()=>{
+          if(this.$refs.audio){
+            this.durationMin = parseInt(this.$refs.audio.duration/60) > 9 ? parseInt(this.$refs.audio.duration/60) : '0'+ parseInt(this.$refs.audio.duration/60);
           
-            if(this.$refs.audio.currentTime < 10){
-             this.curSeconds =  '0'+ parseInt(this.$refs.audio.currentTime)
-            }else if(this.$refs.audio.currentTime > 60){
-             this.curSeconds =  '0'
+            time1 = (this.$refs.audio.duration/60 - this.durationMin) * 60;
+
+            this.durationSe = parseInt(time1) > 9 ? parseInt(time1) : '0' + parseInt(time1);
+            this.curMin ='0' + parseInt(this.$refs.audio.currentTime/60);
+            time = parseInt((this.$refs.audio.currentTime/60 - this.curMin)*60);
+            if(time < 10){
+              this.curSeconds =  '0'+ time;
             }else{
-             this.curSeconds =  parseInt(this.$refs.audio.currentTime)
+              this.curSeconds = time;
             }
-          this.curMin ='0' + parseInt(this.$refs.audio.currentTime/60)
-          this.w = this.$refs.audio.currentTime/this.$refs.audio.duration *100
-          if(this.w == 100){this.autoTab = true}
-        },100)
+            this.w = this.$refs.audio.currentTime/this.$refs.audio.duration * 100;
+            if(this.$refs.audio.currentTime == this.$refs.audio.duration){this.autoTab=true};
+          }
+        },100)//时间定时器结束
       }else{
         this.$store.state.playIcon = 'play';
         this.$refs.audio.pause()
@@ -126,24 +132,60 @@ export default {
       }
       return
     },
-    playState(){
-      clearTimeout(this.$store.state.timer)
-      this.$refs.audio.play()
+    playState(){//上一首和下一首时间状态 函数
+      let time, time1, duration = this.$refs.audio.duration ;
+      clearTimeout(this.$store.state.timer);
+      this.$refs.audio.play();
+      
       this.$store.state.timer = setInterval(()=>{
-        this.w = this.$refs.audio.currentTime/this.$refs.audio.duration *100
-        if(this.w == 100 && this.Surl > 1) {this.number++}
+        this.durationMin = parseInt(duration/60) > 9 ? parseInt(duration/60) : '0'+ parseInt(duration/60);
+        
+        time1 = (duration/60 - this.durationMin) * 60;
+      
+        this.durationSe = parseInt(time1) > 9 ? parseInt(time1) : '0' + parseInt(time1);
+        this.curMin ='0' + parseInt(this.$refs.audio.currentTime/60);
+        time = parseInt((this.$refs.audio.currentTime/60 - this.curMin)*60);
+        if(time < 10){
+          this.curSeconds =  '0'+ time;
+        }else{
+          this.curSeconds = time;
+        }
+        this.w = this.$refs.audio.currentTime/duration *100
+        
       },100)
       if(this.type ==='play'){this.$store.state.playIcon = 'pause'}
+    },//上一首和下一首时间状态 函数 结束
+    setCurTime(e){
+      
+      if(this.$refs.audio) {
+        var duration = this.$refs.audio.duration , el = this.$refs.bar.getBoundingClientRect() ;
+        this.$refs.bar.addEventListener('mousemove',(e)=>{
+          this.$refs.audio.currentTime = duration *((e.pageX - el.left)/el.width)
+        })
+      }
+    },
+    removeAdd(){
+      var duration = this.$refs.audio.duration , el = this.$refs.bar.getBoundingClientRect() ;
+     console.log(this.$refs.bar.removeEventListener('mousemove',(e)=>{
+          this.$refs.audio.currentTime = duration *((e.pageX - el.left)/el.width)
+        })) 
     }
   },
   watch:{
-    oof:function(){
-      this.tabPlay()
+    oof:function run(){
+      // console.log(this.$refs)
+      //   if(typeof this.$refs.audio == 'undefined'){
+      //     return run()
+      //   }
+        this.tabPlay()
     },
-    autoTab:function(){
-      if(this.Surl.length > 1){
-        this.number++
-      }
+    autoTab: () => {
+      // if(typeof this.$refs.audio == 'undefined'){
+      //     return
+      //   }
+      // if(this.Surl.length == 1){
+      //   this.$store.state.playIcon = 'play'
+      // }
     }
   }
 }

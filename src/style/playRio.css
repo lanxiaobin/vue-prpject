@@ -3,9 +3,9 @@
   bottom: 0;
   width: 100%;
   height: 47px;
-  background-color: rgba(0, 0, 0, 0.75);
-  border-top: 1px solid #000;
-  box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.8);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0px 0 1px rgba(0, 0, 0, 0.8);
   z-index: 6;
 }
 .bottom .midl {
@@ -13,6 +13,7 @@
   height: 100%;
   line-height: 55px;
   margin: 0 auto;
+  user-select: none;
 }
 .bottom .midl > div {
   display: inline-block;
@@ -49,10 +50,10 @@
   left: 3px;
 }
 .midl .btns .player {
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   font-size: 24px;
-  line-height: 32px;
+  line-height: 30px;
   margin: 0 6px;
   border-color: #d8cfcf;
   color: #d8cfcf;
@@ -60,7 +61,7 @@
 .midl .btns .player::after {
   display: none;
 }
-.midl .btns .player:before {
+.midl .btns .player::before {
   display: block;
   margin: 0 auto;
 }
@@ -82,7 +83,24 @@
   border-radius: 2px;
   border-bottom: 0.5px solid #858080;
 }
-.Progress .s-name .song-name {
+.midl .oper {
+  padding: 5px 0 0 20px;
+}
+.Progress .ivu-progress-inner {
+  background-color: #4C4C4E;
+}
+.Progress .ivu-progress-inner .ivu-progress-bg {
+  background-color: #D93823;
+}
+.Progress .s-name span {
   display: inline-block;
-  margin-right: 12px;
+}
+.Progress .s-name .sing-name {
+  margin: 0 12px;
+  color: #BDA2A2;
+}
+.Progress .s-name .link {
+  display: inline-block;
+  transform: rotate(-45deg);
+  margin-top: 5px;
 }
